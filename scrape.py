@@ -66,16 +66,16 @@ driver.close()
 ## Formatting, Loading Data Into DataFrame
 
 CraigslistPost = namedtuple('CraigslistPost', ['title', 'price', 'location'])
-craigslist_posts = []
+posts = []
 for post in listHTML:
     title = post.find('a', 'titlestring').text
     price = post.find('div', 'meta').text
     price = re.findall('·(.*)hide', str(price))[0]
     location = post.find('div', 'supertitle').text
-    craigslist_posts.append(CraigslistPost(title, price, location ))
+    posts.append(CraigslistPost(title, price, location ))
 
 pd.set_option('display.max_columns', None)
-df = pd.DataFrame(craigslist_posts)
+df = pd.DataFrame(posts)
 
 df = df.astype({"title": 'string', "price": 'string', "location": 'string'})
 
